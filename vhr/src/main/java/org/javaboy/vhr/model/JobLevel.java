@@ -2,14 +2,14 @@ package org.javaboy.vhr.model;
 
 import java.util.Date;
 
-public class JObLevel {
+public class JobLevel {
     private Integer id;
 
     private String name;
 
-    private String titlelevel;
+    private String titleLevel;
 
-    private Date createdate;
+    private Date createDate;
 
     private Boolean enabled;
 
@@ -29,20 +29,20 @@ public class JObLevel {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getTitlelevel() {
-        return titlelevel;
+    public String getTitleLevel() {
+        return titleLevel;
     }
 
-    public void setTitlelevel(String titlelevel) {
-        this.titlelevel = titlelevel == null ? null : titlelevel.trim();
+    public void setTitleLevel(String titleLevel) {
+        this.titleLevel = titleLevel;
     }
 
-    public Date getCreatedate() {
-        return createdate;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setCreatedate(Date createdate) {
-        this.createdate = createdate;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     public Boolean getEnabled() {

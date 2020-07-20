@@ -1,48 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.javaboy.vhr.mapper.PositionMapper">
-  <resultMap id="BaseResultMap" type="org.javaboy.vhr.model.Position">
+<mapper namespace="org.javaboy.vhr.mapper.JobLevelMapper">
+  <resultMap id="BaseResultMap" type="org.javaboy.vhr.model.JobLevel">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="titleLevel" jdbcType="CHAR" property="titleLevel" />
     <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
     <result column="enabled" jdbcType="BIT" property="enabled" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, createDate, enabled
+    id, name, titleLevel, createDate, enabled
   </sql>
-
-  <select id="getAllPosition" resultMap="BaseResultMap">
-    select * from position
-  </select>
-
-
-
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from position
+    from JobLevel
     where id = #{id,jdbcType=INTEGER}
   </select>
-
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from position
+    delete from JobLevel
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="org.javaboy.vhr.model.Position">
-    insert into position (id, name, createDate, 
-      enabled)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
-      #{enabled,jdbcType=BIT})
+  <insert id="insert" parameterType="org.javaboy.vhr.model.JobLevel">
+    insert into JobLevel (id, name, titleLevel, 
+      createDate, enabled)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{titleLevel,jdbcType=CHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{enabled,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="org.javaboy.vhr.model.Position">
-    insert into position
+  <insert id="insertSelective" parameterType="org.javaboy.vhr.model.JobLevel">
+    insert into JobLevel
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
       <if test="name != null">
         name,
+      </if>
+      <if test="titleLevel != null">
+        titleLevel,
       </if>
       <if test="createDate != null">
         createDate,
@@ -58,6 +53,9 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
+      <if test="titleLevel != null">
+        #{titleLevel,jdbcType=CHAR},
+      </if>
       <if test="createDate != null">
         #{createDate,jdbcType=TIMESTAMP},
       </if>
@@ -66,18 +64,14 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKey" parameterType="org.javaboy.vhr.model.Position">
-    update position
-    set name = #{name,jdbcType=VARCHAR},
-      createDate = #{createDate,jdbcType=TIMESTAMP},
-      enabled = #{enabled,jdbcType=BIT}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.javaboy.vhr.model.Position">
-    update position
+  <update id="updateByPrimaryKeySelective" parameterType="org.javaboy.vhr.model.JobLevel">
+    update JobLevel
     <set>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="titleLevel != null">
+        titleLevel = #{titleLevel,jdbcType=CHAR},
       </if>
       <if test="createDate != null">
         createDate = #{createDate,jdbcType=TIMESTAMP},
@@ -88,16 +82,31 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <update id="updateByPrimaryKey" parameterType="org.javaboy.vhr.model.JobLevel">
+    update JobLevel
+    set name = #{name,jdbcType=VARCHAR},
+      titleLevel = #{titleLevel,jdbcType=CHAR},
+      createDate = #{createDate,jdbcType=TIMESTAMP},
+      enabled = #{enabled,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 
-  <!--进行批量删除操作-->
-  <delete id="deleteBatchPosition">
-   delete from position
-    where
-    id in
-    <foreach collection="list" item="id" separator="," open="("  close=")">
-       #{id}
+  <select id="findLevel" resultType="java.lang.String">
+    select distinct titleLevel from joblevel
+  </select>
+  <!--查询所有的职称信息-->
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from joblevel
+    order by id
+  </select>
+
+  <!--批量删除-->
+  <delete id="deleteBatchJob">
+    delete from joblevel where id in
+    <foreach collection="list" item="id"  separator="," open="(" close=")">
+      #{id}
     </foreach>
   </delete>
-
-
 </mapper>

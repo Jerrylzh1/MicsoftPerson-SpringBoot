@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 public class RespBean {
-    private Integer status;
+    private Integer code;
     private String msg;
     private Object obj;
 
@@ -34,8 +34,8 @@ public class RespBean {
         return new RespBean(500,msg,obj);
     }
 
-    public RespBean(Integer status, String msg, Object obj) {
-        this.status = status;
+    public RespBean(Integer code, String msg, Object obj) {
+        this.code = code;
         this.msg = msg;
         this.obj = obj;
     }

@@ -1,9 +1,8 @@
 package org.javaboy.vhr.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.javaboy.vhr.model.Hr;
+import org.apache.ibatis.annotations.Param;
 import org.javaboy.vhr.model.Menu;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Mapper
@@ -23,4 +22,12 @@ public interface MenuMapper {
     List<Menu> findMenu(Integer hrId);
 
     List<Menu> getAllMenusWithRole();
+
+    List<Menu> getAllMenus();
+
+    List<Integer> getMidsByRid(Integer rid);
+
+    void deleteByRId(Integer rid);
+
+    Integer insertRecord(@Param("rid") Integer rid, @Param("mids") Integer[] mids);
 }
